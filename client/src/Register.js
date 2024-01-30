@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -8,10 +9,24 @@ function Register() {
   const [semester, setSemester] = useState('Spring 2024'); // Default value
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // TODO: Implement the code to submit the registration details along with the selected option to the server
-    console.log('Register:', username, email, password, option, semester);
+  
+    const userData = {
+      username,
+      password,
+      email,
+      // other fields
+    };
+  
+    try {
+      const response = await axios.post('http://localhost:5000/register', userData);
+      console.log('User registered:', response.data);
+      // Handle success (e.g., navigate to a different page, show a success message)
+    } catch (error) {
+      console.error('Error registering user:', error.response.data);
+      // Handle error (e.g., show error message)
+    }
   };
 
   return (
