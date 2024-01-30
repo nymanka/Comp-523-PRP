@@ -4,11 +4,14 @@ function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [option, setOption] = useState('one'); // Default selection
+  const [semester, setSemester] = useState('Spring 2024'); // Default value
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: Implement the code to submit the registration details to the server
-    console.log('Register:', username, email, password);
+    // TODO: Implement the code to submit the registration details along with the selected option to the server
+    console.log('Register:', username, email, password, option, semester);
   };
 
   return (
@@ -26,6 +29,30 @@ function Register() {
         <div>
           <label>Password:</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </div>
+        <div>
+          <label>Options:</label>
+          <div>
+            <input type="radio" id="one" name="option" value="one" checked={option === 'one'} onChange={(e) => setOption(e.target.value)} />
+            <label htmlFor="one">One</label>
+          </div>
+          <div>
+            <input type="radio" id="two" name="option" value="two" checked={option === 'two'} onChange={(e) => setOption(e.target.value)} />
+            <label htmlFor="two">Two</label>
+          </div>
+          <div>
+            <input type="radio" id="three" name="option" value="three" checked={option === 'three'} onChange={(e) => setOption(e.target.value)} />
+            <label htmlFor="three">Three</label>
+          </div>
+        </div>
+        <div>
+          <label htmlFor="semester">Semester:</label>
+          <select id="semester" value={semester} onChange={(e) => setSemester(e.target.value)}>
+            <option value="Spring 2024">Spring 2024</option>
+            <option value="Fall 2024">Fall 2024</option>
+            <option value="Spring 2025">Spring 2025</option>
+            {/* Add more semesters as needed */}
+          </select>
         </div>
         <button type="submit">Register</button>
       </form>
