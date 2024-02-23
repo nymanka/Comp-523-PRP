@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -7,6 +8,8 @@ function Register() {
   const [email, setEmail] = useState('');
   const [option, setOption] = useState('one'); // Default selection
   const [semester, setSemester] = useState('Spring 2024'); // Default value
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
 
   const handleSubmit = async (event) => {
@@ -24,10 +27,14 @@ function Register() {
     try {
       const response = await axios.post('http://localhost:5000/register', userData);
       console.log('User registered:', response.data);
-      // Handle success (e.g., navigate to a different page, show a success message)
+      // Handle success 
+      navigate('/home');
     } catch (error) {
-      console.error('Error registering user:', error.response.data);
-      // Handle error (e.g., show error message)
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data); // Display error message from server
+      } else {
+        setErrorMessage('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -72,6 +79,7 @@ function Register() {
           </select>
         </div>
         <button type="submit">Register</button>
+        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
       </form>
     </div>
   );
