@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // TODO: Implement the code to submit the username and password to the server
-    console.log('Sign In:', username, password);
+    setErrorMessage(''); // Clear any previous error messages
+
+    try {
+      // Replace URL with your actual backend endpoint
+      const response = await axios.post('http://localhost:5000/signin', { username, password });
+      console.log(response.data);
+      // TODO: Handle login success, e.g., redirect to a different page or store logged-in user info
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Handle 401 Unauthorized
+        setErrorMessage('Email does not exist or password is incorrect.');
+      } else {
+        // Handle other errors
+        setErrorMessage('An error occurred. Please try again.');
+      }
+    }
   };
 
   return (
@@ -28,6 +44,13 @@ function SignIn() {
       <p>
         Don't have an account? <Link to="/register">Register here</Link>
       </p>
+    
+      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+      <form onSubmit={handleSubmit}>
+        
+        <button type="submit">Sign In</button>
+      </form>
+      {/* Registration link */}
     </div>
   );
 }

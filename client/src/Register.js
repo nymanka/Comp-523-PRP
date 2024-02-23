@@ -16,6 +16,8 @@ function Register() {
       username,
       password,
       email,
+      option,
+      semester,
       // other fields
     };
   
