@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+import './Register.css'; // Import the CSS here
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -10,6 +12,7 @@ function Register() {
   const [semester, setSemester] = useState('Spring 2024'); // Default value
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
 
   const handleSubmit = async (event) => {
@@ -27,7 +30,8 @@ function Register() {
     try {
       const response = await axios.post('http://localhost:5000/register', userData);
       console.log('User registered:', response.data);
-      // Handle success 
+      // Handle success
+       login(userData);
       navigate('/home');
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -39,9 +43,9 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className='register-container'>
       <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="register-form">
         <div>
           <label>Username:</label>
           <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
@@ -79,7 +83,7 @@ function Register() {
           </select>
         </div>
         <button type="submit">Register</button>
-        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </form>
     </div>
   );

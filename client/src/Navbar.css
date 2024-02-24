@@ -1,26 +1,36 @@
 /* Navbar.css */
-nav {
-    background-color: #333;
-    overflow: hidden;
-  }
-  
-  nav a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-  nav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  nav a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
-  
+.navbar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.banner-image {
+  width: 100%;
+  height: 200px; /* Adjust based on your banner image */
+  background-image: url('./images/banner.jpg'); /* Update with your image path */
+  background-size: cover;
+  background-position: center;
+}
+
+.nav-links {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  background: #333; /* Dark background for the navbar */
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  background: #007bff; /* Highlight for active or hovered links */
+}

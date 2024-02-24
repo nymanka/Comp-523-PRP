@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
+import { useAuth } from './AuthContext'; // Adjust the path as necessary
+import  './Profile.css';
 
 const Profile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-
-  // Dummy user data - replace with actual data as needed
-  const user = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    // other user details
-  };
+  const { user } = useAuth(); // Use the user data from AuthContext
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -16,23 +12,28 @@ const Profile = () => {
 
   const handleFileUpload = () => {
     if (selectedFile) {
-      // Implement the logic to handle the file upload
       console.log('Uploading', selectedFile.name);
-      // You would typically send this file to your server here
+      // Implement file upload logic here
     }
   };
 
+  if (!user) {
+    return <div>Please log in to view this page.</div>;
+  }
+
   return (
-    <div>
-      <h1>Profile Page</h1>
-      <div>
+    <div className="profile-container">
+      <div className="profile-header">
+        <h1>Profile Page</h1>
+      </div>
+      <div className="user-info">
         <h2>User Information</h2>
-        <p>Name: {user.name}</p>
+        <p>Name: {user.username}</p>
         <p>Email: {user.email}</p>
-        {/* Display other user information here */}
+        {/* Additional user details */}
       </div>
 
-      <div>
+      <div className="file-upload-container">
         <h2>Upload PDF</h2>
         <input type="file" accept=".pdf" onChange={handleFileChange} />
         <button onClick={handleFileUpload}>Upload</button>

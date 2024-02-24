@@ -33,8 +33,16 @@ app.post('/signin', async (req, res) => {
       return res.status(401).send('Password is incorrect.');
     }
 
-    // TODO: Implement session or token logic here for successful authentication
-    res.send('User logged in successfully.');
+     // Exclude sensitive data from the user object before sending
+     const userData = {
+      id: user._id, // Consider sending only non-sensitive data
+      username: user.username,
+      email: user.email,
+      // add other data you might need, but do not include the password
+    };
+
+    res.json(userData);
+
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');

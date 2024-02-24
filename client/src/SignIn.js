@@ -1,6 +1,9 @@
+import './SignIn.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+
 
 
 function SignIn() {
@@ -8,6 +11,7 @@ function SignIn() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,8 +20,8 @@ function SignIn() {
     try {
       // Replace URL with your actual backend endpoint
       const response = await axios.post('http://localhost:5000/signin', { username, password });
-      console.log(response.data);
       // TODO: Handle login success
+      login(response.data);
       navigate('/home');
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -31,28 +35,25 @@ function SignIn() {
   };
 
   return (
-    <div>
-      <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        <button type="submit">Sign In</button>
-      </form>
-      <p>
-        Don't have an account? <Link to="/register">Register here</Link>
-      </p>
-    
-      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-      <form onSubmit={handleSubmit}>
-        
-      </form>
-      {/* Registration link */}
+    <div className="sign-in-container"> {/* Use container class for overall styling */}
+      <div className="form-container"> {/* Use form container class for the form area */}
+        <h2>Sign In</h2>
+        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+        <form onSubmit={handleSubmit} className="sign-in-form"> {/* Add a class if specific form styling is needed */}
+          <div className="form-group">
+            <label className="form-label">Username:</label>
+            <input type="text" className="form-input" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Password:</label>
+            <input type="password" className="form-input" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          </div>
+          <button type="submit" className="form-button">Sign In</button>
+          <p className="link-text">
+            Don't have an account? <Link to="/register">Register here</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }

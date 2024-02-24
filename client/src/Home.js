@@ -1,15 +1,16 @@
 import React from 'react';
-import Calendar from 'react-calendar'; // Import only if you're using react-calendar
-import 'react-calendar/dist/Calendar.css'; // Default styling
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import './Home.css'; // Import the CSS here
 
 const Home = () => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <div>
+    <div className="home-container">
+      <div className="notifications-container">
         <h2>Notifications</h2>
         {/* Notification list goes here */}
       </div>
-      <div>
+      <div className="calendar-container">
         <Calendar /> {/* Render Calendar */}
       </div>
     </div>

@@ -1,14 +1,57 @@
 /* Profile.css */
-
 .profile-container {
-    margin: 20px;
-  }
-  
-  .profile-container h2 {
-    margin-top: 20px;
-  }
-  
-  .upload-section {
-    margin-top: 20px;
-  }
-  
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  border-bottom: 2px solid #EEEEEE;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.user-info, .file-upload-container {
+  margin-bottom: 20px;
+}
+
+.user-info h2, .file-upload-container h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.user-info p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+.file-upload-container {
+  border-top: 2px solid #EEEEEE;
+  padding-top: 20px;
+}
+
+input[type="file"] {
+  border: 1px solid #DDD;
+  display: block;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
