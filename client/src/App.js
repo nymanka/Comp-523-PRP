@@ -3,6 +3,7 @@ import './App.css';
 import Home from './Home';
 import Profile from './Profile';
 import SignIn from './SignIn';
+import Form from './Form';
 import Register from './Register';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
@@ -23,6 +24,7 @@ function Navigation() {
       <div className="nav-links"> {/* Navigation links container */}
         <NavLink to="/home" activeClassName="active">Home</NavLink>
         <NavLink to="/profile" activeClassName="active">Profile</NavLink>
+        <NavLink to="/form" activeClassName="active">Form</NavLink>
         {/* Include other links as needed */}
       </div>
     </div>
@@ -39,6 +41,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route exact path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/form" element={<Form />} />
         </Routes>
       </Router>
     </AuthProvider>
