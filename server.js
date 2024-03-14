@@ -70,6 +70,22 @@ app.post('/register', async (req, res) => {
   }
 });
 
+// Search users by name
+app.get('/search', async (req, res) => {
+  const { name } = req.query;
+
+  try {
+    // Perform a case-insensitive search for users whose names contain the specified query
+    const users = await User.find({ username: { $regex: new RegExp(name, 'i') }, option: { $ne: 'one' } });
+
+    res.json(users);
+  } catch (error) {
+    console.error('Error occurred during search:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

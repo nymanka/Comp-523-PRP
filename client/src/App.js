@@ -5,6 +5,7 @@ import AdminHome from './AdminHome';
 import Profile from './Profile';
 import SignIn from './SignIn';
 import Form from './Form';
+import Search from './Search';
 import Register from './Register';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
@@ -39,7 +40,7 @@ function Navigation() {
         <div className="banner-image" style={{ backgroundImage: `url(${bannerImage})` }}></div> {/* Inline style for the banner image */}
         <div className="nav-links"> {/* Navigation links container */}
           <NavLink to="/admin-home" activeClassName="active">Home</NavLink>
-          <NavLink to="/form" activeClassName="active">Search</NavLink>
+          <NavLink to="/search" activeClassName="active">Search</NavLink>
           {/* Include other links as needed */}
         </div>
       </div>
@@ -59,6 +60,7 @@ function App() {
           <Route exact path="/admin-home" element={<AdminHome />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/form" element={<Form />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </Router>
     </AuthProvider>
