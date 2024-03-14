@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Home from './Home';
+import AdminHome from './AdminHome';
 import Profile from './Profile';
 import SignIn from './SignIn';
 import Form from './Form';
@@ -40,6 +41,7 @@ function App() {
           <Route exact path="/" element={<SignIn />} />
           <Route path="/register" element={<Register />} />
           <Route exact path="/home" element={<Home />} />
+          <Route exact path="/admin-home" element={<AdminHome />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/form" element={<Form />} />
         </Routes>

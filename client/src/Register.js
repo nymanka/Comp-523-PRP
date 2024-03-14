@@ -32,7 +32,10 @@ function Register() {
       console.log('User registered:', response.data);
       // Handle success
        login(userData);
-      navigate('/home');
+      if (response.data.option === 'one') {
+        navigate('/admin-home');
+      }
+      else navigate('/home');
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data); // Display error message from server

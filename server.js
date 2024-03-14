@@ -38,6 +38,7 @@ app.post('/signin', async (req, res) => {
       id: user._id, // Consider sending only non-sensitive data
       username: user.username,
       email: user.email,
+      option: user.option,
       // add other data you might need, but do not include the password
     };
 

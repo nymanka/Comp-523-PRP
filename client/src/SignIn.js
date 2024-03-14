@@ -22,7 +22,10 @@ function SignIn() {
       const response = await axios.post('http://localhost:5000/signin', { username, password });
       // TODO: Handle login success
       login(response.data);
-      navigate('/home');
+      if (response.data.option === 'one') {
+        navigate('/admin-home');
+      }
+      else navigate('/home');
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Handle 401 Unauthorized
