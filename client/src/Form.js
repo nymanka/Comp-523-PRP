@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 import './Form.css';
@@ -20,6 +20,14 @@ function Form() {
     });
     const [isReadOnly, setIsReadOnly] = useState(false);
 
+
+    useEffect(() => {
+      if (user && user.formData) {
+          setFormData(user.formData);
+          setIsReadOnly(true);
+      }
+  }, [user]);
+
     const handleInputChange = (event) => {
         if (!isReadOnly) {
             const { name, value } = event.target;
@@ -29,6 +37,7 @@ function Form() {
             }));
         }
     };
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -54,7 +63,7 @@ function Form() {
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
+          <input type="text" id="name" name="name" value={user.formData.name} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
         </div>
 
         <div className="form-group">
