@@ -24,10 +24,13 @@ function Form() {
 
     useEffect(() => {
       if (user && user.formData) {
-          setFormData(user.formData);
-          setIsReadOnly(true);
+        setFormData(user.formData); // Load current user's saved formData from AuthContext
+        // Check if all fields in formData are not empty
+        const isFormEmpty = Object.values(user.formData).every(value => value === '');
+        setIsReadOnly(!isFormEmpty);
       }
-  }, [user]);
+    }, [user]);    
+
 
     const handleInputChange = (event) => {
         if (!isReadOnly) {
@@ -53,8 +56,25 @@ function Form() {
 };
 
   const handleEdit = () => {
-    setIsReadOnly(false);
+    setIsReadOnly(false); // Make fields not read-only to edit
 };
+
+const handleClearForm = () => {
+  setFormData({
+    name: '',
+    id: '',
+    titleOfPRPTopic: '',
+    researchAdvisor: '',
+    prpSubmitted: '',
+    fullAuthorList: '',
+    paperAccepted: '',
+    reviewsAvailable: '',
+    partResponsibleFor: '',
+    presentationScope: '',
+  });
+  setIsReadOnly(false);
+};
+
   if (!user) {
     return <div>Please log in to view this page.</div>;
   }
@@ -170,6 +190,7 @@ function Form() {
         
             <button type="submit" onClick={handleFormSubmit}>Save</button>
             <button type="button" onClick={handleEdit} disabled={!isReadOnly}>Edit</button>
+            <button type="button" onClick={handleClearForm}>Clear Form (for testing)</button>
       </form>
     </div>
   );
