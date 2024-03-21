@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Home from './Home';
 import AdminHome from './AdminHome';
@@ -13,8 +13,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider, useAuth } from './AuthContext'; // Ensure this path is correct
 import bannerImage from './images/banner.jpg';
 
+
 function Navigation() {
   const { isAuthenticated, isAdmin } = useAuth();
+  console.log('Navigation render', { isAuthenticated, isAdmin });
+
+
+  useEffect(() => {
+    console.log('Authentication state changed:', isAuthenticated, isAdmin);
+  }, [isAuthenticated, isAdmin]);
 
   if (!isAuthenticated) {
     return null;

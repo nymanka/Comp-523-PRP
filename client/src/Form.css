@@ -99,4 +99,14 @@
     border-color: #007bff;
     outline: none; /* Removes the default focus outline and replaces it with a border color change */
   }
-  
+
+  .readonly {
+    background-color: #f3f3f3; /* Light gray background */
+    color: #6c757d; /* Dimmed text color */
+    pointer-events: none; /* Prevents clicking on the field */
+}
+
+input[type="radio"].readonly {
+  pointer-events: none; /* Prevent clicking on the radio */
+  opacity: 0.5; /* Make the radio button appear faded */
+}
