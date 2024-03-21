@@ -4,7 +4,7 @@ import { useAuth } from './AuthContext';
 import './Form.css';
 
 function Form() {
-    const { user } = useAuth();
+    const { user, updateFormData } = useAuth();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -18,6 +18,7 @@ function Form() {
         partResponsibleFor: '',
         presentationScope: '',
     });
+    
     const [isReadOnly, setIsReadOnly] = useState(false);
 
 
@@ -42,7 +43,8 @@ function Form() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-        await axios.post('http://localhost:5000/saveFormData', { userId: user.id, formData });
+        await axios.post('http://localhost:5000/saveFormData', { userId: user.id, formData }); //Post to Database
+        updateFormData(formData); //Update user context of formData
         setIsReadOnly(true); // Make fields read-only after saving
         console.log('Form data saved successfully');
     } catch (error) {
@@ -63,7 +65,7 @@ function Form() {
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" value={user.formData.name} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
+          <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
         </div>
 
         <div className="form-group">

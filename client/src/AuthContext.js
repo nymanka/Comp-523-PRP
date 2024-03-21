@@ -1,5 +1,4 @@
 import React, { useState, createContext, useContext } from 'react';
-import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -19,10 +18,9 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-const updateUserData = async (formData) => {
+const updateFormData = async (formData) => {
     try {
-        const response = await axios.post('http://localhost:5000/saveFormData', { userId: user.id, formData });
-        setUser(response.data); // Update user data in context
+        user.formData = formData;
     } catch (error) {
         console.error('Error updating user data:', error);
     }
@@ -34,7 +32,7 @@ const updateUserData = async (formData) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAdmin, isAuthenticated, user, login, logout, updateUserData}}>
+    <AuthContext.Provider value={{ isAdmin, isAuthenticated, user, login, logout, updateFormData}}>
       {children}
     </AuthContext.Provider>
   );
