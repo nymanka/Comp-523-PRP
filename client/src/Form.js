@@ -63,7 +63,7 @@ function Form() {
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" value={user.formData.name} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
+          <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
         </div>
 
         <div className="form-group">
