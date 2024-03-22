@@ -1,53 +1,36 @@
 /* AdminHome.css */
 .home-container {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  .notifications-container,
-  .calendar-container {
-    flex: 1;
-    margin: 10px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-  
-  .notifications-container {
-    margin-right: 20px; /* Adjust space between notifications and calendar */
-  }
-  
-  .calendar-container .react-calendar {
-    border: none;
-    max-width: 100%;
-    background: transparent;
-  }
-  
-  .react-calendar__navigation button {
-    background-color: #f0f0f0;
-    color: #333;
-    min-width: 44px;
-    margin: 0 10px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .react-calendar__month-view__weekdays {
-    text-align: center;
-    color: #666;
-  }
-  
-  .react-calendar__tile:enabled:hover,
-  .react-calendar__tile:enabled:focus {
-    background: #e0e0e0;
-  }
-  
-  .react-calendar__tile--active {
-    background: #007bff;
-    color: white;
-  }
-  
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.notifications-container,
+.calendar-container {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column; /* Make sure the container can expand vertically */
+}
+
+.notifications-container {
+  margin-right: 20px; /* Adjust space between notifications and calendar */
+}
+
+.calendar-container {
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents the iframe from overflowing */
+}
+
+.calendar-container iframe {
+  width: 100%; /* Adjust width to fit the container */
+  max-height: 600px; /* Adjust height as necessary */
+  border: none; /* Ensure no border around the iframe */
+}
