@@ -30,7 +30,11 @@ function Register() {
       const response = await axios.post('http://localhost:5000/register', userData);
       console.log('User registered:', response.data);
       // Handle success
-      navigate('/');
+       login(userData);
+      if (response.data.option === 'one') {
+        navigate('/admin-home');
+      }
+      else navigate('/home');
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data); // Display error message from server
