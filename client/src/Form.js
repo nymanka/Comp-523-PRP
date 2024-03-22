@@ -29,7 +29,7 @@ function Form() {
         const isFormEmpty = Object.values(user.formData).every(value => value === '');
         setIsReadOnly(!isFormEmpty);
       }
-    }, [user]);    
+    }, [user]);
 
 
     const handleInputChange = (event) => {
