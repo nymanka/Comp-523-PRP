@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -9,6 +10,26 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   
+  useEffect(() => {
+    const fetchUserData = async () => {
+        const token = localStorage.getItem('localToken');
+        const loggedInUserId = localStorage.getItem("id");
+        if (token && loggedInUserId) {
+            setIsAuthenticated(true);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+            try {
+                const response = await axios.get('http://localhost:5000/userData', { params: { userId: loggedInUserId } });
+                setUser(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                // Handle error (e.g., clear local storage, reset auth state)
+            }
+        }
+    };
+
+    fetchUserData();
+}, []);
 
   const login = (userData) => {
     setIsAuthenticated(true); // Set authenticated flag to true
@@ -29,6 +50,7 @@ const updateFormData = async (formData) => {
   const logout = () => {
     setIsAuthenticated(false); // Set authenticated flag to false
     setUser(null); // Clear user data
+    localStorage.clear();
   };
 
   return (

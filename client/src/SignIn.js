@@ -6,12 +6,16 @@ import { useAuth } from './AuthContext';
 
 
 
+
 function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,8 +24,12 @@ function SignIn() {
     try {
       // Replace URL with your actual backend endpoint
       const response = await axios.post('http://localhost:5000/signin', { username, password });
-      // TODO: Handle login success
+      // Handle login success by logging in info and putting info into local Storage
       login(response.data);
+      localStorage.setItem("localToken", JSON.stringify(response.data));
+      localStorage.setItem("id", response.data.id);
+      
+      //************************************* */
       if (response.data.option === 'one') {
         navigate('/admin-home');
       }

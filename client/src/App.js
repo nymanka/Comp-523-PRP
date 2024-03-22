@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import './App.css';
 import Home from './Home';
 import AdminHome from './AdminHome';
@@ -17,6 +17,7 @@ function Navigation() {
     const { isAuthenticated, isAdmin, logout } = useAuth();
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
       console.log('Authentication state changed:', isAuthenticated, isAdmin);
@@ -37,7 +38,7 @@ function Navigation() {
         setShowLogoutConfirm(false);
     };
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated || location.pathname === '/') {
         return null;
     }
 
