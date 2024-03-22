@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
 import './Register.css'; // Import the CSS here
 
 function Register() {
@@ -12,7 +11,7 @@ function Register() {
   const [semester, setSemester] = useState('Spring 2024'); // Default value
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+
 
 
   const handleSubmit = async (event) => {
@@ -31,11 +30,7 @@ function Register() {
       const response = await axios.post('http://localhost:5000/register', userData);
       console.log('User registered:', response.data);
       // Handle success
-       login(userData);
-      if (response.data.option === 'one') {
-        navigate('/admin-home');
-      }
-      else navigate('/home');
+      navigate('/');
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data); // Display error message from server
