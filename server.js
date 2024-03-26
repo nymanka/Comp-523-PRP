@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const User = require('./User');
 const app = express();
+// Import Announcements model and functions
+const { createAnnouncement, getAllAnnouncements } = require('./Announcements');
 
 const saltRounds = 10;
 
@@ -125,6 +127,30 @@ app.get('/userData', async (req, res) => {
   } catch (error) {
       console.error('Error fetching user data:', error);
       res.status(500).send('Server error');
+  }
+});
+
+// Add route to create an announcement
+app.post('/announcement', async (req, res) => {
+  const { message } = req.body;
+
+  try {
+    const newAnnouncement = await createAnnouncement(message);
+    res.status(201).json(newAnnouncement);
+  } catch (error) {
+    console.error('Error creating announcement:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+// Add route to fetch all announcements
+app.get('/announcements', async (req, res) => {
+  try {
+    const announcements = await getAllAnnouncements();
+    res.json(announcements);
+  } catch (error) {
+    console.error('Error fetching announcements:', error);
+    res.status(500).send('Server error');
   }
 });
 
