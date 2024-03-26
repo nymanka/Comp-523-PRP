@@ -42,7 +42,7 @@ function Navigation() {
         return null;
     }
 
-    return (
+    if (!isAdmin) { return (
         <div className="navbar-container">
             <div className="banner-image" style={{ backgroundImage: `url(${bannerImage})` }}></div>
             <div className="nav-links">
@@ -63,7 +63,30 @@ function Navigation() {
                 </div>
             )}
         </div>
-    );
+    ); }
+    else {
+        return (
+            <div className="navbar-container">
+                <div className="banner-image" style={{ backgroundImage: `url(${bannerImage})` }}></div>
+                <div className="nav-links">
+                    <NavLink to="/admin-home" activeClassName="active">Home</NavLink>
+                    {!isAdmin && <NavLink to="/profile" activeClassName="active">Profile</NavLink>}
+                    {!isAdmin && <NavLink to="/form" activeClassName="active">Form</NavLink>}
+                    {isAdmin && <NavLink to="/search" activeClassName="active">Search</NavLink>}
+                    <button className="logout-button" onClick={handleLogoutClick}>
+                        Logout
+                    </button>
+                </div>
+                {showLogoutConfirm && (
+                    <div className="logout-confirm-dialog">
+                        <p>Are you sure you want to logout?</p>
+                        <button onClick={confirmLogout}>Yes</button>
+                        <button onClick={cancelLogout}>No</button>
+                    </div>
+                )}
+            </div>
+        );
+    }
 }
 
 function App() {
