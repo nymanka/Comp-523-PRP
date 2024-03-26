@@ -5,9 +5,11 @@ import './Search.css';
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null); // State to store selected user data
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
+    setSelectedUser(null); // Reset selected user data when search query changes
   };
 
   const handleSearchSubmit = async (event) => {
@@ -15,9 +17,23 @@ function Search() {
     try {
       const response = await axios.get(`http://localhost:5000/search?name=${searchQuery}`);
       setSearchResults(response.data);
+      setSelectedUser(null); // Reset selected user data when new search results are fetched
     } catch (error) {
       console.error('Error occurred during search:', error);
     }
+  };
+
+  const handleUserClick = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/userData?userId=${userId}`);
+      setSelectedUser(response.data);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  const handleBackToResults = () => {
+    setSelectedUser(null); // Reset selected user data when going back to search results
   };
 
   return (
@@ -33,15 +49,39 @@ function Search() {
         />
         <button type="submit" className="search-button">Search</button>
       </form>
-      {searchResults.length > 0 && (
+      {(searchResults.length > 0 && !selectedUser) && ( // Render search results only if there are results and no user is selected
         <div className="search-results">
           <h3>Search Results</h3>
           <ul>
             {/* Map through searchResults and display each username */}
             {searchResults.map((user) => (
-              <li key={user._id}>{user.username}</li>
+              <li key={user._id} onClick={() => handleUserClick(user._id)}>
+                {user.username}
+              </li>
             ))}
           </ul>
+        </div>
+      )}
+      {selectedUser && ( // Render user data modal if a user is selected
+        <div className="user-modal">
+          <div className="modal-content">
+            <button className="back-button" onClick={handleBackToResults}>
+              &#8592; Back to Results
+            </button>
+            <h2>User Details</h2>
+            <p><strong>Name:</strong> {selectedUser.username}</p>
+            <p><strong>Email:</strong> {selectedUser.email}</p>
+            <p><strong>Semester:</strong> {selectedUser.semester}</p>
+            {selectedUser.formData && (
+              <div>
+                <h3>Form Data</h3>
+                {/* Render formData fields */}
+                {Object.entries(selectedUser.formData).map(([key, value]) => (
+                  <p key={key}><strong>{key}:</strong> {value}</p>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
