@@ -16,12 +16,14 @@ function Search() {
     event.preventDefault();
     try {
       const response = await axios.get(`http://localhost:5000/search?name=${searchQuery}`);
-      setSearchResults(response.data);
+      const sortedResults = response.data.sort((a, b) => a.username.localeCompare(b.username));
+      setSearchResults(sortedResults);
       setSelectedUser(null); // Reset selected user data when new search results are fetched
     } catch (error) {
       console.error('Error occurred during search:', error);
     }
   };
+  
 
   const handleUserClick = async (userId) => {
     try {

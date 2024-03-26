@@ -6,7 +6,10 @@ const Home = () => {
     <div className="home-container">
       <div className="notifications-container">
         <h2>Notifications</h2>
-        {/* Notification list goes here */}
+        {<ul>
+          <li>Your paper has been received.</li>
+          <li>Your talk has not been scheduled.</li>
+        </ul>/* Notification list goes here */}
       </div>
       <div className="calendar-container">
         <iframe 
