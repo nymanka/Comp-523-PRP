@@ -22,11 +22,17 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="notifications-container">
-        <h2>Notifications</h2>
+        <h2>Notifications/Announcements</h2>
         <ul>
           {announcements.map((announcement) => (
             <li key={announcement._id}>{announcement.message}</li>
           ))}
+        </ul>
+        <h2>Checklist</h2>
+        <ul>{
+            <><li>Your paper has been received.</li>
+            <li>Your talk has not been scheduled.</li></>
+        }
         </ul>
       </div>
       <div className="calendar-container">
