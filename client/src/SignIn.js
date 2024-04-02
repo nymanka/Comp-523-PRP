@@ -30,7 +30,7 @@ function SignIn() {
       localStorage.setItem("id", response.data.id);
       
       //************************************* */
-      if (response.data.option === 'one') {
+      if (response.data.waive === 'admin') {
         navigate('/admin-home');
       }
       else navigate('/home');
