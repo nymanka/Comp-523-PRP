@@ -64,8 +64,8 @@ function Register() {
             <input type="radio" id="two" name="waive" value="no" checked={waive === 'no'} onChange={(e) => setWaive(e.target.value)} />
             <label htmlFor="two">No</label>
 
-            <input type="radio" id="three" name="waive" value="no" checked={waive === 'admin'} onChange={(e) => setWaive(e.target.value)} />
-            <label htmlFor="two">admin</label>
+            <input type="radio" id="three" name="waive" value="admin" checked={waive === 'admin'} onChange={(e) => setWaive(e.target.value)} />
+            <label htmlFor="three">admin</label>
           </div>
         </div>
         <div>

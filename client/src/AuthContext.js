@@ -17,9 +17,12 @@ export const AuthProvider = ({ children }) => {
         if (token && loggedInUserId) {
             setIsAuthenticated(true);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            
 
             try {
                 const response = await axios.get('http://localhost:5000/userData', { params: { userId: loggedInUserId } });
+                if (response.data.waive === 'admin') setIsAdmin(true); // Set admin flag to true
+                else setIsAdmin(false); // Set admin flag to false
                 setUser(response.data);
             } catch (error) {
                 console.error('Error fetching user data:', error);

@@ -130,6 +130,18 @@ app.get('/userData', async (req, res) => {
   }
 });
 
+app.get('/users', async (req, res) => {
+  const waiveStatus = req.query.waive;
+  
+  try {
+      const users = await User.find({ 'waive': waiveStatus });
+      res.json(users);
+  } catch (error) {
+      console.error('Error fetching users:', error);
+      res.status(500).send('Error fetching users');
+  }
+});
+
 // Add route to create an announcement
 app.post('/announcement', async (req, res) => {
   const { message } = req.body;

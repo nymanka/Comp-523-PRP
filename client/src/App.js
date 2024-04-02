@@ -8,6 +8,8 @@ import SignIn from './SignIn';
 import Form from './Form';
 import Search from './Search';
 import Register from './Register';
+import Schedule from './Schedule';
+import ScheduleW from './ScheduleW';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { AuthProvider, useAuth } from './AuthContext'; // Adjust the path if necessary
@@ -51,6 +53,8 @@ function Navigation() {
                 {!isAdmin && <NavLink to="/form" activeClassName="active">Form</NavLink>}
                 {isAdmin && <NavLink to="/admin-home" activeClassName="active">Home</NavLink>}
                 {isAdmin && <NavLink to="/search" activeClassName="active">Search</NavLink>}
+                {isAdmin && <NavLink to="/schedule" activeClassName="active">Schedule</NavLink>}
+                {isAdmin && <NavLink to="/schedule-w" activeClassName="active">ScheduleW</NavLink>}
                 <button className="logout-button" onClick={handleLogoutClick}>
                     Logout
                 </button>
@@ -73,6 +77,8 @@ function Navigation() {
                     {!isAdmin && <NavLink to="/profile" activeClassName="active">Profile</NavLink>}
                     {!isAdmin && <NavLink to="/form" activeClassName="active">Form</NavLink>}
                     {isAdmin && <NavLink to="/search" activeClassName="active">Search</NavLink>}
+                    {isAdmin && <NavLink to="/schedule" activeClassName="active">Schedule</NavLink>}
+                    {isAdmin && <NavLink to="/schedule-w" activeClassName="active">ScheduleW</NavLink>}
                     <button className="logout-button" onClick={handleLogoutClick}>
                         Logout
                     </button>
@@ -102,6 +108,8 @@ function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/form" element={<Form />} />
                     <Route path="/search" element={<Search />} />
+                    <Route path="/schedule" element={<Schedule />} />
+                    <Route path="/schedule-w" element={<ScheduleW />} />
                 </Routes>
             </Router>
         </AuthProvider>
