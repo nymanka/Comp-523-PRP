@@ -1,0 +1,35 @@
+{
+  "name": "prp_management_system",
+  "version": "1.0.0",
+  "description": "A simple management system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nymanka/comp523s24project16.git"
+  },
+  "keywords": [
+    "management",
+    "system"
+  ],
+  "author": "Team E",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nymanka/comp523s24project16/issues"
+  },
+  "homepage": "https://github.com/nymanka/comp523s24project16#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-jwt": "^8.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.3"
+  }
+}

@@ -1,0 +1,112 @@
+/* Form.css */
+.form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-group .radio-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .form-group .radio-option {
+    margin-right: 20px; /* Adjust spacing between radio buttons as needed */
+  }
+  
+  /* Keeps the label aligned with the radio button */
+  .radio-option label {
+    margin-left: 5px;
+  }
+  
+  /* Optional: Adjust spacing around the radio button for better alignment */
+  .radio-option input[type="radio"] {
+    margin-top: 0;
+  }
+
+  /* Align items in radio-container */
+.radio-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Allows items to wrap if not enough space */
+  }
+  
+  .notification-date-input {
+    margin-left: 20px; /* Space it out from the last radio option */
+    display: flex;
+    align-items: center;
+  }
+  
+  .notification-date-input label {
+    margin-right: 10px;
+  }
+  
+  /* Responsive adjustments (optional) */
+  @media (max-width: 768px) {
+    .radio-container {
+      flex-direction: column;
+    }
+  
+    .notification-date-input {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
+  
+  /* Form.css */
+.form-textarea {
+    width: 100%; /* Ensures the textarea matches the width of other input fields */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit; /* Makes font consistent with the rest of the form */
+    font-size: 16px; /* Matches the font size of other inputs */
+    box-sizing: border-box; /* Ensures padding doesn't increase the box's size */
+  }
+  
+  .form-textarea:focus {
+    border-color: #007bff;
+    outline: none; /* Removes the default focus outline and replaces it with a border color change */
+  }
+
+  .readonly {
+    background-color: #f3f3f3; /* Light gray background */
+    color: #6c757d; /* Dimmed text color */
+    pointer-events: none; /* Prevents clicking on the field */
+}
+
+input[type="radio"].readonly {
+  pointer-events: none; /* Prevent clicking on the radio */
+  opacity: 0.5; /* Make the radio button appear faded */
+}
