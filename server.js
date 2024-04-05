@@ -76,6 +76,35 @@ app.post('/saveFormData', async (req, res) => {
   }
 });
 
+app.post('/saveSchedulingData', async (req, res) => {
+  const { selectedUserId, schedulingData } = req.body;
+
+
+  try {
+      const user = await User.findOne({ username: selectedUserId });
+      if (!user) {
+          console.log('No user found with username:', selectedUserId); // Debugging
+          return res.status(404).send('User not found oogA BOOF');
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(
+          user._id, // Using the ID from the found user
+          { $set: { schedulingData: schedulingData } },
+          { new: true }
+      );
+
+      if (updatedUser) {
+          res.json(updatedUser);
+      } else {
+          res.status(404).send('User not found after update attempt');
+      }
+  } catch (error) {
+      console.error('Error saving scheduling data:', error);
+      res.status(500).send('Error saving scheduling data');
+  }
+});
+
+
 
 //Register user
 app.post('/register', async (req, res) => {

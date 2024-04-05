@@ -8,18 +8,81 @@
   }
   
   .dropdown-container {
-    margin: 20px 0;
+    margin-bottom: 20px;
   }
   
-  .dropdown-container select {
+  .select-user {
     width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    padding: 10px;
     font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   
   .user-details {
     margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-group input[type="date"] {
+    cursor: pointer;
+  }
+  
+  button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  .logout-confirm-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .logout-confirm-dialog p {
+    margin: 0 0 20px 0;
+  }
+  
+  .logout-confirm-dialog button {
+    margin-right: 10px;
   }
   

@@ -18,7 +18,13 @@ const userSchema = new mongoose.Schema({
     reviewsAvailable: { type: String, default: '' },
     partResponsibleFor: { type: String, default: '' },
     presentationScope: { type: String, default: '' },
-},
+  },
+  schedulingData: {
+    date: { type: String, default: '' },
+    advisor: { type: String, default: '' },
+    committee: { type: String, default: '' },
+  },
+
   // Add other fields as necessary
 });
 
