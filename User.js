@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   schedulingData: {
     date: { type: String, default: '' },
+    time: { type: String, default: '' },
     advisor: { type: String, default: '' },
     committee: { type: String, default: '' },
   },

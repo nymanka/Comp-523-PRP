@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 //import { useAuth } from './AuthContext'; // Ensure this import is correct
 import './Schedule.css';
+import ScheduleTable from './ScheduleTable';
 
 function Schedule() {
     //const { updateSchedulingData } = useAuth();
@@ -9,9 +10,11 @@ function Schedule() {
     const [selectedUserId, setSelectedUserId] = useState('');
     const [schedulingData, setSchedulingData] = useState({
         date: '',
+        time: '',
         advisor: '',
         committee: '',
     });
+    const [generateTable, setGenerateTable] = useState(false);
 
     const [isReadOnly, setIsReadOnly] = useState(false);
 
@@ -36,10 +39,11 @@ function Schedule() {
       const user = users.find(u => u.username === username);
       if (user && user.schedulingData) {
           setSchedulingData(user.schedulingData);
+          console.log(schedulingData);
           setIsReadOnly(true);
           
       } else {
-          setSchedulingData({ date: '', advisor: '', committee: '' });
+          setSchedulingData({ date: '', time: '', advisor: '', committee: '' });
       }
   }
 
@@ -56,10 +60,19 @@ function Schedule() {
         try {
             await axios.post('http://localhost:5000/saveSchedulingData', { selectedUserId, schedulingData });
             setIsReadOnly(true);
+            // Fetch updated data
+            const updatedUsers = await axios.get('http://localhost:5000/users?waive=no');
+            setUsers(updatedUsers.data);
             console.log('Scheduling data saved successfully');
         } catch (error) {
             console.error('Error saving scheduling data:', error);
         }
+    };
+
+    const canGenerateSchedule = users.every(user => user.schedulingData && user.schedulingData.date && user.schedulingData.time && user.schedulingData.advisor && user.schedulingData.committee);
+
+    const generateSchedule = () => {
+        setGenerateTable(true);
     };
 
     return (
@@ -80,6 +93,18 @@ function Schedule() {
                         <label>Date:</label>
                         <input type="date" name="date" value={schedulingData.date} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
                     </div>
+                     <div className="form-group">
+                        <label>Time:</label>
+                        <input
+                            type="time"
+                            name="time" // Corresponds to the new time field
+                            value={schedulingData.time}
+                            onChange={handleInputChange}
+                            required
+                            readOnly={isReadOnly}
+                            className={isReadOnly ? 'readonly' : ''}
+                        />
+                    </div>
                     <div className="form-group">
                         <label>Advisor:</label>
                         <input type="text" name="advisor" value={schedulingData.advisor} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
@@ -90,8 +115,15 @@ function Schedule() {
                     </div>
                     <button onClick={handleInfoSubmit}>Submit</button>
                     <button type="button" onClick={handleEdit} disabled={!isReadOnly}>Edit</button>
+                    <button disabled={!canGenerateSchedule} onClick={generateSchedule}>
+                Generate Schedule
+            </button>
+            {generateTable && <ScheduleTable users={users.filter(user => user.schedulingData && user.waive === 'no')} />}
                 </div>
+                
             )}
+
+            
         </div>
     );
 }

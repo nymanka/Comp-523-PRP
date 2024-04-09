@@ -53,6 +53,7 @@ const updateFormData = async (formData) => {
 
   const logout = () => {
     setIsAuthenticated(false); // Set authenticated flag to false
+    setIsAdmin(false); // Set admin flag to false
     setUser(null); // Clear user data
     localStorage.clear();
   };
