@@ -132,7 +132,7 @@ app.get('/search', async (req, res) => {
 
   try {
     // Perform a case-insensitive search for users whose names contain the specified query
-    const users = await User.find({ username: { $regex: new RegExp(name, 'i') }, option: { $ne: 'one' } });
+    const users = await User.find({ username: { $regex: new RegExp(name, 'i') }, waive: { $ne: 'admin' } });
 
     res.json(users);
   } catch (error) {

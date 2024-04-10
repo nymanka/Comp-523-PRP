@@ -20,7 +20,7 @@ function Form() {
     });
     
     const [isReadOnly, setIsReadOnly] = useState(false);
-
+    const [waiverOption, setWaiverOption] = useState('');
 
     useEffect(() => {
       if (user && user.formData) {
@@ -28,6 +28,9 @@ function Form() {
         // Check if all fields in formData are not empty
         const isFormEmpty = Object.values(user.formData).every(value => value === '');
         setIsReadOnly(!isFormEmpty);
+      }
+      if (user && user.waive) {
+      setWaiverOption(user.waive === 'yes' ? 'waiver' : 'non-waiver');
       }
     }, [user]);
 
@@ -44,16 +47,17 @@ function Form() {
 
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-        await axios.post('http://localhost:5000/saveFormData', { userId: user.id, formData }); //Post to Database
-        updateFormData(formData); //Update user context of formData
-        setIsReadOnly(true); // Make fields read-only after saving
-        console.log('Form data saved successfully');
-    } catch (error) {
-        console.error('Error saving form data', error);
-    }
+  event.preventDefault();
+  try {
+      await axios.post('http://localhost:5000/saveFormData', { userId: user.id, formData }); //Post to Database
+      updateFormData(formData); //Update user context of formData
+      setIsReadOnly(true); // Make fields read-only after saving
+      console.log('Form data saved successfully');
+  } catch (error) {
+      console.error('Error saving form data', error);
+  }
 };
+
 
   const handleEdit = () => {
     setIsReadOnly(false); // Make fields not read-only to edit
@@ -83,6 +87,20 @@ const handleClearForm = () => {
     <div className="form-container">
       <h2>PRP Research Form - Part 1</h2>
       <form onSubmit={handleFormSubmit}>
+        <div className="form-group">
+          <label>Waiver Option:</label>
+          <div className="radio-container">
+            <div className="radio-option">
+              <input type="radio" id="nonWaiver" name="waiverOption" value="non-waiver" checked={waiverOption === 'non-waiver'} onChange={() => setWaiverOption('non-waiver')} />
+              <label htmlFor="nonWaiver">Non-Waiver</label>
+            </div>
+            <div className="radio-option">
+              <input type="radio" id="waiver" name="waiverOption" value="waiver" checked={waiverOption === 'waiver'} onChange={() => setWaiverOption('waiver')} />
+              <label htmlFor="waiver">Waiver</label>
+            </div>
+          </div>
+        </div>
+        {/* Render common form fields */}
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
@@ -143,6 +161,8 @@ const handleClearForm = () => {
   </div>
 </div>
 
+ {waiverOption === 'non-waiver' && (
+    <>
 <div className="form-group">
   <label>Are reviews currently available to your committee or will they become available prior to the presentation?</label>
   <div className="radio-container">
@@ -156,6 +176,8 @@ const handleClearForm = () => {
     </div>
   </div>
 </div>
+    </>
+)}
 
 <div className="form-group">
   <label htmlFor="partResponsibleFor">What part of the research were you responsible for?</label>
@@ -171,23 +193,23 @@ const handleClearForm = () => {
   >
   </textarea>
 </div>
-
-<div className="form-group">
-  <label>Will you present the entire research project or just your contribution?</label>
-  <div className="radio-container">
-    <div className="radio-option">
-      <input type="radio" id="presentationScopeEntire" name="presentationScope" value="Entire Project" checked={formData.presentationScope === 'Entire Project'} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
-      <label htmlFor="presentationScopeEntire">Entire Project</label>
-    </div>
-    <div className="radio-option">
-      <input type="radio" id="presentationScopeContribution" name="presentationScope" value="My Contribution" checked={formData.presentationScope === 'My Contribution'} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
-      <label htmlFor="presentationScopeContribution">My Contribution</label>
-    </div>
-  </div>
-</div>
-
-
-        
+{waiverOption === 'non-waiver' && (
+          <>
+            <div className="form-group">
+              <label>Will you present the entire research project or just your contribution?</label>
+              <div className="radio-container">
+                <div className="radio-option">
+                  <input type="radio" id="presentationScopeEntire" name="presentationScope" value="Entire Project" checked={formData.presentationScope === 'Entire Project'} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
+                  <label htmlFor="presentationScopeEntire">Entire Project</label>
+                </div>
+                <div className="radio-option">
+                  <input type="radio" id="presentationScopeContribution" name="presentationScope" value="My Contribution" checked={formData.presentationScope === 'My Contribution'} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
+                  <label htmlFor="presentationScopeContribution">My Contribution</label>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
             <button type="submit" onClick={handleFormSubmit}>Save</button>
             <button type="button" onClick={handleEdit} disabled={!isReadOnly}>Edit</button>
             <button type="button" onClick={handleClearForm}>Clear Form (for testing)</button>
