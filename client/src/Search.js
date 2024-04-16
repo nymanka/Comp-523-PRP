@@ -38,6 +38,19 @@ function Search() {
     setSelectedUser(null); // Reset selected user data when going back to search results
   };
 
+  const fieldNames = {
+    name: "Name",
+    id: "ID",
+    titleOfPRPTopic: "Title of PRP Topic",
+    researchAdvisor: "Research Advisor",
+    prpSubmitted: "PRP Submitted",
+    fullAuthorList: "Full Author List",
+    paperAccepted: "Paper Accepted",
+    reviewsAvailable: "Reviews Available",
+    partResponsibleFor: "Part Responsible For",
+    presentationScope: "Presentation Scope"
+  };
+
   return (
     <div className="search-container">
       <h2>Student Search</h2>
@@ -51,11 +64,10 @@ function Search() {
         />
         <button type="submit" className="search-button">Search</button>
       </form>
-      {(searchResults.length > 0 && !selectedUser) && ( // Render search results only if there are results and no user is selected
+      {(searchResults.length > 0 && !selectedUser) && (
         <div className="search-results">
           <h3>Search Results</h3>
           <ul>
-            {/* Map through searchResults and display each username */}
             {searchResults.map((user) => (
               <li key={user._id} onClick={() => handleUserClick(user._id)}>
                 {user.username}
@@ -64,7 +76,7 @@ function Search() {
           </ul>
         </div>
       )}
-      {selectedUser && ( // Render user data modal if a user is selected
+      {selectedUser && (
         <div className="user-modal">
           <div className="modal-content">
             <button className="back-button" onClick={handleBackToResults}>
@@ -77,9 +89,8 @@ function Search() {
             {selectedUser.formData && (
               <div>
                 <h3>Form Data</h3>
-                {/* Render formData fields */}
                 {Object.entries(selectedUser.formData).map(([key, value]) => (
-                  <p key={key}><strong>{key}:</strong> {value}</p>
+                  <p key={key}><strong>{fieldNames[key] || key}:</strong> {value}</p>
                 ))}
               </div>
             )}

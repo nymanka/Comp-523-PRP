@@ -6,7 +6,6 @@ function ScheduleTable({ users }) {
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
                     <th>Student</th>
                     <th>Title</th>
                     <th>Advisor</th>
@@ -17,7 +16,6 @@ function ScheduleTable({ users }) {
             <tbody>
                 {users.map((user, index) => (
                     <tr key={index}>
-                        <td>{[user.schedulingData.date," ", user.schedulingData.time]}</td>
                         <td>{user.formData.name}</td>
                         <td>{user.formData.titleOfPRPTopic}</td>
                         <td>{user.schedulingData.advisor}</td>
