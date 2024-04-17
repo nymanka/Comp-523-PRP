@@ -50,6 +50,13 @@ const updateFormData = async (formData) => {
     }
 }
 
+const updateWaiveOption = async (waiveOption) => {
+    try {
+        user.waive = waiveOption;
+    } catch (error) {
+        console.error('Error updating user waive option:', error);
+    }
+}
 
   const logout = () => {
     setIsAuthenticated(false); // Set authenticated flag to false
@@ -59,7 +66,7 @@ const updateFormData = async (formData) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAdmin, isAuthenticated, user, login, logout, updateFormData}}>
+    <AuthContext.Provider value={{ isAdmin, isAuthenticated, user, login, logout, updateFormData, updateWaiveOption}}>
       {children}
     </AuthContext.Provider>
   );

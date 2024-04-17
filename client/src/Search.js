@@ -44,11 +44,12 @@ function Search() {
     titleOfPRPTopic: "Title of PRP Topic",
     researchAdvisor: "Research Advisor",
     prpSubmitted: "PRP Submitted",
-    fullAuthorList: "Full Author List",
+    nameOfJournal: "Name of Conference/Journal",
     paperAccepted: "Paper Accepted",
     reviewsAvailable: "Reviews Available",
     partResponsibleFor: "Part Responsible For",
-    presentationScope: "Presentation Scope"
+    presentationScope: "Presentation Scope",
+    listenWaiver: "Who Listened to Waiver Talk (If Applicable)"
   };
 
   return (
@@ -83,9 +84,10 @@ function Search() {
               &#8592; Back to Results
             </button>
             <h2>User Details</h2>
-            <p><strong>Name:</strong> {selectedUser.username}</p>
+            <p><strong>Username:</strong> {selectedUser.username}</p>
             <p><strong>Email:</strong> {selectedUser.email}</p>
             <p><strong>Semester:</strong> {selectedUser.semester}</p>
+            <p><strong>Waiver:</strong> {selectedUser.waive}</p>
             {selectedUser.formData && (
               <div>
                 <h3>Form Data</h3>
