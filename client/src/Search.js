@@ -60,7 +60,7 @@ function Search() {
     titleOfPRPTopic: "Title of PRP Topic",
     researchAdvisor: "Research Advisor",
     prpSubmitted: "PRP Submitted",
-    fullAuthorList: "Full Author List",
+    nameOfJournal: "Name of Conference/Journal",
     paperAccepted: "Paper Accepted",
     reviewsAvailable: "Reviews Available",
     partResponsibleFor: "Part Responsible For",
@@ -100,7 +100,7 @@ function Search() {
         </button>
         <div className="user-details">
           <h3>User Details</h3>
-          <p><strong>Name:</strong> {selectedUser.username}</p>
+          <p><strong>Username:</strong> {selectedUser.username}</p>
           <p><strong>Email:</strong> {selectedUser.email}</p>
           <p><strong>Semester:</strong> {selectedUser.semester}</p>
         </div>
