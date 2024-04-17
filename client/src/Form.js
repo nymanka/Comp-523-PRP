@@ -4,7 +4,7 @@ import { useAuth } from './AuthContext';
 import './Form.css';
 
 function Form() {
-    const { user, updateFormData } = useAuth();
+    const { user, updateFormData, updateWaiveOption } = useAuth();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -12,11 +12,12 @@ function Form() {
         titleOfPRPTopic: '',
         researchAdvisor: '',
         prpSubmitted: '',
-        fullAuthorList: '',
+        nameOfJournal: '',
         paperAccepted: '',
         reviewsAvailable: '',
         partResponsibleFor: '',
         presentationScope: '',
+        listenWaiver: '',
     });
     
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -52,6 +53,8 @@ function Form() {
       await axios.post('http://localhost:5000/saveFormData', { userId: user.id, formData }); //Post to Database
       updateFormData(formData); //Update user context of formData
       setIsReadOnly(true); // Make fields read-only after saving
+      await axios.post('http://localhost:5000/saveWaiveOption', { userId: user.id, waive: waiverOption === 'waiver' ? 'yes' : 'no' }); // Post to Database
+      updateWaiveOption(waiverOption === 'waiver' ? 'yes' : 'no' ); //Update user context of waiveOption
       console.log('Form data saved successfully');
   } catch (error) {
       console.error('Error saving form data', error);
@@ -70,11 +73,12 @@ const handleClearForm = () => {
     titleOfPRPTopic: '',
     researchAdvisor: '',
     prpSubmitted: '',
-    fullAuthorList: '',
+    nameOfJournal: '',
     paperAccepted: '',
     reviewsAvailable: '',
     partResponsibleFor: '',
     presentationScope: '',
+    listenWaiver: '',
   });
   setIsReadOnly(false);
 };
@@ -92,7 +96,7 @@ const handleClearForm = () => {
           <div className="radio-container">
             <div className="radio-option">
               <input type="radio" id="nonWaiver" name="waiverOption" value="non-waiver" checked={waiverOption === 'non-waiver'} onChange={() => setWaiverOption('non-waiver')} />
-              <label htmlFor="nonWaiver">Non-Waiver</label>
+              <label htmlFor="nonWaiver">PRP</label>
             </div>
             <div className="radio-option">
               <input type="radio" id="waiver" name="waiverOption" value="waiver" checked={waiverOption === 'waiver'} onChange={() => setWaiverOption('waiver')} />
@@ -136,8 +140,8 @@ const handleClearForm = () => {
 </div>
 
         <div className="form-group">
-          <label htmlFor="fullAuthorList">If yes, give the full author list:</label>
-          <input type="text" id="fullAuthorList" name="fullAuthorList" value={formData.fullAuthorList} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
+          <label htmlFor="nameOfJournal">If yes, give the name of the conference or journal (Don't forget to upload your paper in Profile):</label>
+          <input type="text" id="nameOfJournal" name="nameOfJournal" value={formData.nameOfJournal} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
         </div>
 
         <div className="form-group">
@@ -161,8 +165,6 @@ const handleClearForm = () => {
   </div>
 </div>
 
- {waiverOption === 'non-waiver' && (
-    <>
 <div className="form-group">
   <label>Are reviews currently available to your committee or will they become available prior to the presentation?</label>
   <div className="radio-container">
@@ -176,8 +178,6 @@ const handleClearForm = () => {
     </div>
   </div>
 </div>
-    </>
-)}
 
 <div className="form-group">
   <label htmlFor="partResponsibleFor">What part of the research were you responsible for?</label>
@@ -193,8 +193,6 @@ const handleClearForm = () => {
   >
   </textarea>
 </div>
-{waiverOption === 'non-waiver' && (
-          <>
             <div className="form-group">
               <label>Will you present the entire research project or just your contribution?</label>
               <div className="radio-container">
@@ -208,8 +206,15 @@ const handleClearForm = () => {
                 </div>
               </div>
             </div>
-          </>
-        )}
+
+{waiverOption === 'waiver' && (
+    <>
+        <div className="form-group">
+          <label htmlFor="listenWaiver">Who listened to your waiver talk?</label>
+          <input type="text" id="listenWaiver" name="listenWaiver" value={formData.listenWaiver} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
+        </div>
+    </>
+)}
             <button type="submit" onClick={handleFormSubmit}>Save</button>
             <button type="button" onClick={handleEdit} disabled={!isReadOnly}>Edit</button>
             <button type="button" onClick={handleClearForm}>Clear Form (for testing)</button>

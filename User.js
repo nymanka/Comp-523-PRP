@@ -13,11 +13,12 @@ const userSchema = new mongoose.Schema({
     titleOfPRPTopic: { type: String, default: '' },
     researchAdvisor: { type: String, default: '' },
     prpSubmitted: { type: String, default: '' },
-    fullAuthorList: { type: String, default: '' },
+    nameOfJournal: { type: String, default: '' },
     paperAccepted: { type: String, default: '' },
     reviewsAvailable: { type: String, default: '' },
     partResponsibleFor: { type: String, default: '' },
     presentationScope: { type: String, default: '' },
+    listenWaiver: { type: String, default: '' }
   },
   schedulingData: {
     date: { type: String, default: '' },

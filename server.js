@@ -54,7 +54,7 @@ app.post('/signin', async (req, res) => {
   }
 });
 
-// Assuming your User model has a formData field to store the form data
+// User model has a formData field to store the form data
 app.post('/saveFormData', async (req, res) => {
   const { userId, formData } = req.body;
 
@@ -73,6 +73,28 @@ app.post('/saveFormData', async (req, res) => {
   } catch (error) {
     console.error('Error saving form data:', error);
     res.status(500).send('Error saving form data');
+  }
+});
+
+// In Form, if Waive option has been changed
+app.post('/saveWaiveOption', async (req, res) => {
+  const { userId, waive } = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: { waive: waive } },
+      { new: true } // Return the updated document
+    );
+
+    if (updatedUser) {
+      res.json({ message: 'Waive option saved successfully', updatedUser });
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.error('Error saving waive option:', error);
+    res.status(500).send('Error saving waive option');
   }
 });
 
@@ -172,7 +194,7 @@ app.get('/search', async (req, res) => {
 // Get user data
 app.get('/userData', async (req, res) => {
   // Extract user ID from request, typically done through authentication token
-  // For now, let's assume you're sending the user ID in the query for simplicity
+  // For now, sending the user ID in the query for simplicity
   const { userId } = req.query;
 
   try {
