@@ -5,25 +5,24 @@ import './Search.css';
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null); // State to store selected user data
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [newPassword, setNewPassword] = useState('');
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
-    setSelectedUser(null); // Reset selected user data when search query changes
+    setSelectedUser(null);
   };
 
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.get(`http://localhost:5000/search?name=${searchQuery}`);
-      const sortedResults = response.data.sort((a, b) => a.username.localeCompare(b.username));
-      setSearchResults(sortedResults);
-      setSelectedUser(null); // Reset selected user data when new search results are fetched
+      setSearchResults(response.data.sort((a, b) => a.username.localeCompare(b.username)));
+      setSelectedUser(null);
     } catch (error) {
       console.error('Error occurred during search:', error);
     }
   };
-  
 
   const handleUserClick = async (userId) => {
     try {
@@ -35,7 +34,24 @@ function Search() {
   };
 
   const handleBackToResults = () => {
-    setSelectedUser(null); // Reset selected user data when going back to search results
+    setSelectedUser(null);
+  };
+
+  
+
+  const handlePasswordReset = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post('http://localhost:5000/resetPassword', {
+        selectedUserId: selectedUser.username,
+        password: newPassword
+      });
+      alert('Password reset successfully!');
+      setNewPassword('');
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      alert('Failed to reset password.');
+    }
   };
 
   const fieldNames = {
@@ -53,51 +69,67 @@ function Search() {
 
   return (
     <div className="search-container">
-      <h2>Student Search</h2>
-      <form onSubmit={handleSearchSubmit} className="search-form">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={handleSearchInputChange}
-          className="search-input"
-        />
-        <button type="submit" className="search-button">Search</button>
-      </form>
-      {(searchResults.length > 0 && !selectedUser) && (
-        <div className="search-results">
-          <h3>Search Results</h3>
-          <ul>
-            {searchResults.map((user) => (
-              <li key={user._id} onClick={() => handleUserClick(user._id)}>
-                {user.username}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {selectedUser && (
-        <div className="user-modal">
-          <div className="modal-content">
-            <button className="back-button" onClick={handleBackToResults}>
-              &#8592; Back to Results
-            </button>
-            <h2>User Details</h2>
-            <p><strong>Name:</strong> {selectedUser.username}</p>
-            <p><strong>Email:</strong> {selectedUser.email}</p>
-            <p><strong>Semester:</strong> {selectedUser.semester}</p>
-            {selectedUser.formData && (
-              <div>
-                <h3>Form Data</h3>
-                {Object.entries(selectedUser.formData).map(([key, value]) => (
-                  <p key={key}><strong>{fieldNames[key] || key}:</strong> {value}</p>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+  <h2>Student Search</h2>
+  <form onSubmit={handleSearchSubmit} className="search-form">
+    <input
+      type="text"
+      placeholder="Search by name..."
+      value={searchQuery}
+      onChange={handleSearchInputChange}
+      className="search-input"
+    />
+    <button type="submit" className="search-button">Search</button>
+  </form>
+  {(searchResults.length > 0 && !selectedUser) && (
+    <div className="search-results">
+      <h3>Search Results</h3>
+      <ul>
+        {searchResults.map((user) => (
+          <li key={user._id} onClick={() => handleUserClick(user._id)}>
+            {user.username}
+          </li>
+        ))}
+      </ul>
     </div>
+  )}
+  {selectedUser && (
+    <div className="user-modal">
+      <div className="modal-content">
+        <button className="back-button" onClick={handleBackToResults}>
+          &#8592; Back to Results
+        </button>
+        <div className="user-details">
+          <h3>User Details</h3>
+          <p><strong>Name:</strong> {selectedUser.username}</p>
+          <p><strong>Email:</strong> {selectedUser.email}</p>
+          <p><strong>Semester:</strong> {selectedUser.semester}</p>
+        </div>
+        {selectedUser.formData && (
+          <div className="form-data">
+            <h3>Form Data</h3>
+            {Object.entries(selectedUser.formData).map(([key, value]) => (
+              <p key={key}><strong>{fieldNames[key] || key}:</strong> {value}</p>
+            ))}
+          </div>
+        )}
+        <div className="password-reset">
+          <h2>Reset Password</h2>
+          <form onSubmit={handlePasswordReset}>
+            <input
+              type="password"
+              placeholder="Enter new password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Reset Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
   );
 }
 

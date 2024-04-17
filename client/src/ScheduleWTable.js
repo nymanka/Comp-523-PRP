@@ -1,7 +1,7 @@
 import React from 'react';
 import './ScheduleTable.css';
 
-function ScheduleTable({ users }) {
+function ScheduleWTable({ users }) {
     return (
         <table>
             <thead>
@@ -36,4 +36,4 @@ function ScheduleTable({ users }) {
 }
 
 
-export default ScheduleTable;
+export default ScheduleWTable;

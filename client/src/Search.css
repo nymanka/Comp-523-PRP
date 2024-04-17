@@ -9,6 +9,7 @@
 
 .search-form {
   display: flex;
+  margin-bottom: 20px; /* Spacing between search and results */
 }
 
 .search-input {
@@ -26,6 +27,7 @@
   border-radius: 4px;
   padding: 8px 15px;
   cursor: pointer;
+  width: 150px; /* Ensures that the button is wider */
 }
 
 .search-results {
@@ -46,9 +48,74 @@
   padding: 8px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  border: 1px solid #ddd; /* Added a subtle border for better definition */
+  background-color: #ffffff; /* Default background color */
 }
 
 .search-results li:hover {
   background-color: #f0f0f0; /* Light grey background on hover */
-  color: #333; /* Darker text color for contrast */
+  color: #333; /* Darker text color for better contrast */
+}
+
+.user-modal {
+  margin-top: 20px;
+}
+
+.password-reset input {
+  width: 100%; /* Makes the input field take full width of its container */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.password-reset button {
+  width: 100%; /* Align button width with input field */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+  margin-top: 10px; /* Spacing between input field and button */
+}
+
+.user-modal {
+  margin-top: 20px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-modal .modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-details, .form-data {
+  background: #ffffff;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.user-details h3, .form-data h3 {
+  margin-top: 0;
+  color: #007bff; /* Match the button color */
+}
+
+.user-details p, .form-data p {
+  margin: 5px 0;
+}
+
+/* Improved layout for individual data points */
+.user-details p, .form-data p {
+  display: flex;
+  align-items: center;
+}
+
+.user-details strong, .form-data strong {
+  min-width: 160px; /* Ensures alignment */
+  font-weight: 600;
 }

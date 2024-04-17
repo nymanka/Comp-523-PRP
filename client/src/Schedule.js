@@ -71,9 +71,14 @@ function Schedule() {
     const hasCompleteSchedulingDetails = user => 
         user.schedulingData && 
         user.schedulingData.date && 
-        user.schedulingData.time && 
-        user.schedulingData.advisor && 
-        user.schedulingData.committee;
+        user.schedulingData.time;
+
+        // const hasCompleteSchedulingDetails = user => 
+        // user.schedulingData && 
+        // user.schedulingData.date && 
+        // user.schedulingData.time && 
+        // user.schedulingData.advisor && 
+        // user.schedulingData.committee;
 
     return (
         <div className="schedule-container">

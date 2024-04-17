@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Schedule.css';
-import ScheduleTable from './ScheduleTable';
+import ScheduleWTable from './ScheduleWTable';
 
-function Schedule() {
+function ScheduleW() {
     const [users, setUsers] = useState([]);
     const [selectedUserId, setSelectedUserId] = useState('');
     const [schedulingData, setSchedulingData] = useState({
@@ -69,9 +69,6 @@ function Schedule() {
     };
 
     const hasCompleteSchedulingDetails = user => 
-        user.schedulingData && 
-        user.schedulingData.date && 
-        user.schedulingData.time && 
         user.schedulingData.advisor && 
         user.schedulingData.committee;
 
@@ -97,14 +94,6 @@ function Schedule() {
                 <div className="user-details">
                     <h3>Scheduling Details</h3>
                     <div className="form-group">
-                        <label>Date:</label>
-                        <input type="date" name="date" value={schedulingData.date} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
-                    </div>
-                    <div className="form-group">
-                        <label>Time:</label>
-                        <input type="time" name="time" value={schedulingData.time} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
-                    </div>
-                    <div className="form-group">
                         <label>Advisor:</label>
                         <input type="text" name="advisor" value={schedulingData.advisor} onChange={handleInputChange} required readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
                     </div>
@@ -116,9 +105,9 @@ function Schedule() {
                     <button type="button" onClick={handleEdit} disabled={!isReadOnly}>Edit</button>
                 </div>
             )}
-            {generateTable && <ScheduleTable users={users.filter(hasCompleteSchedulingDetails)} />}
+            {generateTable && <ScheduleWTable users={users.filter(hasCompleteSchedulingDetails)} />}
         </div>
     );
 }
 
-export default Schedule;
+export default ScheduleW;

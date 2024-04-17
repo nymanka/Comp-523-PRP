@@ -126,6 +126,34 @@ app.post('/register', async (req, res) => {
   }
 });
 
+app.post('/resetPassword', async (req, res) => {
+  const { selectedUserId, password } = req.body;
+  req.body.password = await bcrypt.hash(req.body.password, saltRounds);
+
+  try {
+      const user = await User.findOne({ username: selectedUserId });
+      if (!user) {
+          console.log('No user found with username:', selectedUserId); // Debugging
+          return res.status(404).send('User not found oogA BOOF');
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(
+          user._id, // Using the ID from the found user
+          { $set: { password: req.body.password } },
+          { new: true }
+      );
+
+      if (updatedUser) {
+          res.json(updatedUser);
+      } else {
+          res.status(404).send('User not found after update attempt');
+      }
+  } catch (error) {
+      console.error('Error saving new password:', error);
+      res.status(500).send('Error saving new password');
+  }
+});
+
 // Search users by name
 app.get('/search', async (req, res) => {
   const { name } = req.query;
@@ -158,6 +186,8 @@ app.get('/userData', async (req, res) => {
       res.status(500).send('Server error');
   }
 });
+
+
 
 app.get('/users', async (req, res) => {
   const waiveStatus = req.query.waive;
