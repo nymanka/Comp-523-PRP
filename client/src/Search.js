@@ -5,11 +5,13 @@ import './Search.css';
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null); // State to store selected user data
+  const [selectedUser, setSelectedUser] = useState(null); 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedFormData, setEditedFormData] = useState(null);
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
-    setSelectedUser(null); // Reset selected user data when search query changes
+    setSelectedUser(null); 
   };
 
   const handleSearchSubmit = async (event) => {
@@ -18,24 +20,26 @@ function Search() {
       const response = await axios.get(`http://localhost:5000/search?name=${searchQuery}`);
       const sortedResults = response.data.sort((a, b) => a.username.localeCompare(b.username));
       setSearchResults(sortedResults);
-      setSelectedUser(null); // Reset selected user data when new search results are fetched
+      setSelectedUser(null); 
     } catch (error) {
       console.error('Error occurred during search:', error);
     }
   };
-  
 
   const handleUserClick = async (userId) => {
     try {
       const response = await axios.get(`http://localhost:5000/userData?userId=${userId}`);
       setSelectedUser(response.data);
+      setIsEditing(false); // Reset edit mode when selecting a new user
+      setEditedFormData(null); // Reset edited form data
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
   };
 
-  const handleBackToResults = () => {
-    setSelectedUser(null); // Reset selected user data when going back to search results
+  const toggleEditMode = () => {
+    setIsEditing(!isEditing);
+    setEditedFormData(null); // Reset edited form data when toggling edit mode
   };
 
   const fieldNames = {
@@ -50,6 +54,28 @@ function Search() {
     partResponsibleFor: "Part Responsible For",
     presentationScope: "Presentation Scope",
     listenWaiver: "Who Listened to Waiver Talk (If Applicable)"
+  };
+
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
+    setEditedFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitEdits = async () => {
+    try {
+      await axios.post('http://localhost:5000/saveFormData', { userId: selectedUser._id, formData: editedFormData });
+      setSelectedUser((prevUser) => ({
+        ...prevUser,
+        formData: editedFormData,
+      }));
+      setIsEditing(false); // Exit edit mode after submitting edits
+      console.log('Edits submitted successfully');
+    } catch (error) {
+      console.error('Error submitting edits:', error);
+    }
   };
 
   return (
@@ -80,7 +106,7 @@ function Search() {
       {selectedUser && (
         <div className="user-modal">
           <div className="modal-content">
-            <button className="back-button" onClick={handleBackToResults}>
+            <button className="back-button" onClick={() => setSelectedUser(null)}>
               &#8592; Back to Results
             </button>
             <h2>User Details</h2>
@@ -88,7 +114,24 @@ function Search() {
             <p><strong>Email:</strong> {selectedUser.email}</p>
             <p><strong>Semester:</strong> {selectedUser.semester}</p>
             <p><strong>Waiver:</strong> {selectedUser.waive}</p>
-            {selectedUser.formData && (
+            {isEditing && selectedUser.formData && (
+              <div>
+                <h3>Edit Form Data</h3>
+                {Object.entries(selectedUser.formData).map(([key, value]) => (
+                <><p><strong>{fieldNames[key] || key}:</strong></p>  
+                <input
+                    key={key}
+                    type="text"
+                    name={key}
+                    value={editedFormData?.[key] ?? value}
+                    onChange={handleFieldChange}
+                    className="edit-input"
+                  />
+                  </>
+                ))}
+              </div>
+            )}
+            {!isEditing && selectedUser.formData && (
               <div>
                 <h3>Form Data</h3>
                 {Object.entries(selectedUser.formData).map(([key, value]) => (
@@ -96,6 +139,7 @@ function Search() {
                 ))}
               </div>
             )}
+            <button onClick={toggleEditMode}>{isEditing ? 'Submit' : 'Edit'}</button>
           </div>
         </div>
       )}
