@@ -20,6 +20,22 @@ mongoose.connect('mongodb://localhost:27017/PHP', { useNewUrlParser: true, useUn
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.error('MongoDB connection error:', err));
 
+
+// Set up Multer (for file upload)
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/') // make sure this folder exists
+  },
+  filename: function(req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage });
+app.use('/uploads', express.static('uploads'));
+
 //Sign in check
 app.post('/signin', async (req, res) => {
   const { username, password } = req.body;
@@ -126,6 +142,23 @@ app.post('/saveSchedulingData', async (req, res) => {
   }
 });
 
+// PDF File Upload
+app.post('/uploadPdf', upload.single('pdfFile'), async (req, res) => {
+  if (!req.file) return res.status(400).send('No file uploaded.');
+  if (path.extname(req.file.originalname).toLowerCase() !== '.pdf') {
+    return res.status(400).send('Only PDF files are allowed.');
+  }
+
+  try {
+    const userId = req.body.userId; // Make sure userId is passed with the file
+    const pdfUrl = `/uploads/${req.file.filename}`;
+    const user = await User.findByIdAndUpdate(userId, { pdfFileUrl: pdfUrl }, { new: true });
+    res.json({ message: "File uploaded successfully.", user });
+  } catch (error) {
+    console.error('File upload error:', error);
+    res.status(500).send('Error uploading file');
+  }
+});
 
 
 //Register user

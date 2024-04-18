@@ -64,7 +64,8 @@ function Search() {
     paperAccepted: "Paper Accepted",
     reviewsAvailable: "Reviews Available",
     partResponsibleFor: "Part Responsible For",
-    presentationScope: "Presentation Scope"
+    presentationScope: "Presentation Scope",
+    listenWaiver: "Who Listened to Waiver Talk (If Applicable)"
   };
 
   return (
@@ -103,6 +104,10 @@ function Search() {
           <p><strong>Username:</strong> {selectedUser.username}</p>
           <p><strong>Email:</strong> {selectedUser.email}</p>
           <p><strong>Semester:</strong> {selectedUser.semester}</p>
+          <p><strong>PRP Paper:</strong> {selectedUser.pdfFileUrl && (
+  <a href={`http://localhost:5000${selectedUser.pdfFileUrl}`} target="_blank" rel="noopener noreferrer">Open PDF</a>
+)}
+</p>
         </div>
         {selectedUser.formData && (
           <div className="form-data">

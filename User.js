@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     advisor: { type: String, default: '' },
     committee: { type: String, default: '' },
   },
-
+  pdfFileUrl: { type: String, default: '' }
   // Add other fields as necessary
 });
 

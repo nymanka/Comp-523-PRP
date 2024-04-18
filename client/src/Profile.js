@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from './AuthContext'; // Adjust the path as necessary
 import  './Profile.css';
+import axios from 'axios';
 
 const Profile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -10,12 +11,26 @@ const Profile = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleFileUpload = () => {
-    if (selectedFile) {
-      console.log('Uploading', selectedFile.name);
-      // Implement file upload logic here
+const handleFileUpload = () => {
+  if (!selectedFile) return;
+
+  const formData = new FormData();
+  formData.append('pdfFile', selectedFile);
+  formData.append('userId', user.id); // Adjust according to where user id is stored
+
+  axios.post('http://localhost:5000/uploadPdf', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
     }
-  };
+  })
+  .then(response => {
+    console.log('File uploaded successfully:', response.data);
+  })
+  .catch(error => {
+    console.error('Upload error:', error);
+  });
+};
+
 
   if (!user) {
     return <div>Please log in to view this page.</div>;
