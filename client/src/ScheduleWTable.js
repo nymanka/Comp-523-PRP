@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './ScheduleTable.css';
 
 function ScheduleWTable({ users }) {
+    const navigate = useNavigate();
+
+    const handleUserClick = (userId) => {
+        // Navigate to Search page and pass the user ID
+        navigate('/search', { state: { userId } });
+    };
     return (
         <table>
             <thead>
@@ -34,7 +41,11 @@ function ScheduleWTable({ users }) {
                                 : user.schedulingData.committee
                             }
                         </td>
-                        <td>{user.username}</td>
+                        <td>
+                            <a href="#" onClick={() => handleUserClick(user._id)}>
+                                {user.username}
+                            </a>
+                        </td>
                     </tr>
                 ))}
             </tbody>

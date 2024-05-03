@@ -57,6 +57,7 @@ const AdminHome = () => {
       try {
         await axios.post('http://localhost:5000/admin/reset');
         alert('Reset successful');
+        fetchAnnouncements();
       } catch (error) {
         console.error('Error during reset:', error);
         alert('Reset failed');
@@ -74,12 +75,13 @@ const AdminHome = () => {
           onChange={handleAnnouncementChange}
           placeholder="Enter your announcement..."
           className="announcement-input"
+          maxLength="300" // limit to 300 characters
         />
         <ul>
           {announcements.map((announcement) => (
            <li key={announcement._id}>
               {announcement.message}
-              <button onClick={() => handleDeleteAnnouncement(announcement._id)}>Delete</button>
+              <button onClick={() => handleDeleteAnnouncement(announcement._id)} className="delete-button">Delete</button>
             </li>
           ))}
         </ul>

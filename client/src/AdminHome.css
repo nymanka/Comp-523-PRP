@@ -11,7 +11,26 @@
   justify-content: space-around; 
 }
 
-.notifications-container,
+.notifications-container {
+  max-height: 500px; /* Adjust based on your layout */
+  overflow-y: auto; /* Enables vertical scrolling when content overflows */
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+li {
+  margin-bottom: 10px; /* Adds space between list items */
+  padding: 5px; /* Padding for each item */
+  background: #f9f9f9; /* Light background for visibility */
+  border-radius: 5px; /* Optional: Rounded corners for better visuals */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds subtle shadow */
+  word-wrap: break-word; /* Ensures long words do not overflow */
+}
+
 .calendar-container {
   flex: 1;
   margin: 10px;
@@ -37,4 +56,20 @@
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s;
+}
+
+.delete-button {
+  background-color: #ff4d4d; /* Red background */
+  color: white; /* White text */
+  border: none;
+  padding: 4px 8px;
+  margin-top: 5px;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.delete-button:hover {
+  background-color: #ff0000; /* Darker shade of red on hover */
 }

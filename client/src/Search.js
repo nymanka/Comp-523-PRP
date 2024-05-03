@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import axios from 'axios';
 import './Search.css';
 
 function Search() {
+  const location = useLocation(); // Access the location object
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [newPassword, setNewPassword] = useState('');
+
+  useEffect(() => {
+    if (location.state && location.state.userId) {
+      handleUserClick(location.state.userId);
+    }
+  }, [location.state]);
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
