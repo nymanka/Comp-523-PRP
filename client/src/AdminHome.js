@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminHome.css';
 import { useAuth } from './AuthContext';
@@ -6,13 +6,45 @@ import { useAuth } from './AuthContext';
 const AdminHome = () => {
   const [announcementText, setAnnouncementText] = useState('');
   const { isAdmin } = useAuth();
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    fetchAnnouncements();
+  }, []);
+
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/announcements');
+      setAnnouncements(response.data);
+    } catch (error) {
+      console.error('Error fetching announcements:', error);
+      // Handle error
+    }
+  };
 
   const handleAnnouncementSubmit = async () => {
     try {
       await axios.post('http://localhost:5000/announcement', { message: announcementText });
       setAnnouncementText('');
+      fetchAnnouncements();
     } catch (error) {
       console.error('Error making announcement:', error);
+    }
+  };
+
+  const handleDeleteAnnouncement = async (id) => {
+    if (window.confirm('Are you sure you want to delete this announcement?')) {
+      try {
+        const response = await axios.delete(`http://localhost:5000/announcement/${id}`);
+        if (response.status === 200) {
+          alert('Announcement deleted successfully');
+          // Refresh the announcements list
+          fetchAnnouncements();
+        }
+      } catch (error) {
+        console.error('Error deleting announcement:', error);
+        alert('Failed to delete announcement');
+      }
     }
   };
 
@@ -43,6 +75,14 @@ const AdminHome = () => {
           placeholder="Enter your announcement..."
           className="announcement-input"
         />
+        <ul>
+          {announcements.map((announcement) => (
+           <li key={announcement._id}>
+              {announcement.message}
+              <button onClick={() => handleDeleteAnnouncement(announcement._id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
         <button onClick={handleAnnouncementSubmit} className="announcement-submit-button">Make Announcement</button>
       </div>
       

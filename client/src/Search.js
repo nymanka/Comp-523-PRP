@@ -63,8 +63,6 @@ function Search() {
     nameOfJournal: "Name of Conference/Journal",
     paperAccepted: "Paper Accepted",
     reviewsAvailable: "Reviews Available",
-    partResponsibleFor: "Part Responsible For",
-    presentationScope: "Presentation Scope",
     listenWaiver: "Who Listened to Waiver Talk (If Applicable)"
   };
 

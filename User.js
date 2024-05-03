@@ -16,8 +16,6 @@ const userSchema = new mongoose.Schema({
     nameOfJournal: { type: String, default: '' },
     paperAccepted: { type: String, default: '' },
     reviewsAvailable: { type: String, default: '' },
-    partResponsibleFor: { type: String, default: '' },
-    presentationScope: { type: String, default: '' },
     listenWaiver: { type: String, default: '' }
   },
   schedulingData: {

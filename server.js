@@ -300,6 +300,21 @@ app.get('/announcements', async (req, res) => {
   }
 });
 
+// Delete an announcement
+app.delete('/announcement/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await Announcement.findByIdAndDelete(id);
+    if (result) {
+      res.status(200).send('Announcement deleted successfully');
+    } else {
+      res.status(404).send('Announcement not found');
+    }
+  } catch (error) {
+    console.error('Error deleting announcement:', error);
+    res.status(500).send('Server error');
+  }
+});
 
 // Middleware to check if the user is authenticated and an admin
 function isAdmin(req, res, next) {

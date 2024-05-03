@@ -76,8 +76,6 @@ const handleClearForm = () => {
     nameOfJournal: '',
     paperAccepted: '',
     reviewsAvailable: '',
-    partResponsibleFor: '',
-    presentationScope: '',
     listenWaiver: '',
   });
   setIsReadOnly(false);
@@ -178,34 +176,6 @@ const handleClearForm = () => {
     </div>
   </div>
 </div>
-
-<div className="form-group">
-  <label htmlFor="partResponsibleFor">What part of the research were you responsible for?</label>
-  <textarea 
-    id="partResponsibleFor" 
-    name="partResponsibleFor" 
-    value={formData.partResponsibleFor} 
-    onChange={handleInputChange} 
-    required 
-    rows="4" // Adjust the number of rows as needed
-    readOnly={isReadOnly} // Make textarea read-only based on isReadOnly state
-    className={`form-textarea ${isReadOnly ? 'readonly' : ''}`} // Apply 'readonly' class when isReadOnly is true
-  >
-  </textarea>
-</div>
-            <div className="form-group">
-              <label>Will you present the entire research project or just your contribution?</label>
-              <div className="radio-container">
-                <div className="radio-option">
-                  <input type="radio" id="presentationScopeEntire" name="presentationScope" value="Entire Project" checked={formData.presentationScope === 'Entire Project'} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
-                  <label htmlFor="presentationScopeEntire">Entire Project</label>
-                </div>
-                <div className="radio-option">
-                  <input type="radio" id="presentationScopeContribution" name="presentationScope" value="My Contribution" checked={formData.presentationScope === 'My Contribution'} onChange={handleInputChange} readOnly={isReadOnly} className={isReadOnly ? 'readonly' : ''}/>
-                  <label htmlFor="presentationScopeContribution">My Contribution</label>
-                </div>
-              </div>
-            </div>
 
 {waiverOption === 'waiver' && (
     <>

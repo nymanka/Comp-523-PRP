@@ -39,6 +39,10 @@ function Register() {
     }
   };
 
+  const handleBack = () => {
+    navigate('/');
+  };
+
   return (
     <div className='register-container'>
       <h2>Register</h2>
@@ -78,6 +82,7 @@ function Register() {
           </select>
         </div>
         <button type="submit">Register</button>
+        <button type="button" onClick={handleBack} className="back-button">Back to Sign In</button>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
       </form>
     </div>
