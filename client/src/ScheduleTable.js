@@ -18,8 +18,15 @@ function ScheduleTable({ users }) {
                 {users.map((user, index) => (
                     <tr key={index}>
                         <td>{[user.schedulingData.date," ", user.schedulingData.time]}</td>
-                        <td>{user.formData.name}</td>
-                        <td>{user.formData.titleOfPRPTopic}</td>
+                        <td>{user.formData.name}</td><td>
+                            {user.pdfFileUrl ? (
+                                <a href={`http://localhost:5000${user.pdfFileUrl}`} target="_blank" rel="noopener noreferrer">
+                                    {user.formData.titleOfPRPTopic}
+                                </a>
+                            ) : (
+                                user.formData.titleOfPRPTopic
+                            )}
+                        </td>
                         <td>{user.formData.researchAdvisor}</td>
                         <td>
                             {

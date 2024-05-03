@@ -123,7 +123,7 @@ app.post('/saveSchedulingData', async (req, res) => {
       const user = await User.findOne({ username: selectedUserId });
       if (!user) {
           console.log('No user found with username:', selectedUserId); // Debugging
-          return res.status(404).send('User not found oogA BOOF');
+          return res.status(404).send('User not found');
       }
 
       const updatedUser = await User.findByIdAndUpdate(
