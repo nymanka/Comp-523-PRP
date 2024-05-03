@@ -13,7 +13,7 @@ function ScheduleW() {
         committee: '',
     });
     const [generateTable, setGenerateTable] = useState(false);
-
+    const [emailList, setEmailList] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
 
     useEffect(() => {
@@ -49,6 +49,14 @@ function ScheduleW() {
 
     const handleEdit = () => {
         setIsReadOnly(false); // Make fields editable
+    };
+
+    const retrieveEmails = async () => {
+        try {
+            setEmailList(users.map(user => user.email).join(', '));
+        } catch (error) {
+            console.error('Error retrieving emails:', error);
+        }
     };
 
     const handleInfoSubmit = async () => {
@@ -106,6 +114,8 @@ function ScheduleW() {
                 </div>
             )}
             {generateTable && <ScheduleWTable users={users.filter(hasCompleteSchedulingDetails)} />}
+            <button onClick={retrieveEmails}>Retrieve Emails</button>
+            {emailList && <p>{emailList}</p>}
         </div>
     );
 }

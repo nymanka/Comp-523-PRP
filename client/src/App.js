@@ -53,8 +53,8 @@ function Navigation() {
                 {!isAdmin && <NavLink to="/form" activeClassName="active">Form</NavLink>}
                 {isAdmin && <NavLink to="/admin-home" activeClassName="active">Home</NavLink>}
                 {isAdmin && <NavLink to="/search" activeClassName="active">Search</NavLink>}
-                {isAdmin && <NavLink to="/schedule" activeClassName="active">Schedule</NavLink>}
-                {isAdmin && <NavLink to="/schedule-w" activeClassName="active">ScheduleW</NavLink>}
+                {isAdmin && <NavLink to="/schedule" activeClassName="active">PRP</NavLink>}
+                {isAdmin && <NavLink to="/schedule-w" activeClassName="active">Waived</NavLink>}
                 <button className="logout-button" onClick={handleLogoutClick}>
                     Logout
                 </button>
@@ -77,8 +77,8 @@ function Navigation() {
                     {!isAdmin && <NavLink to="/profile" activeClassName="active">Profile</NavLink>}
                     {!isAdmin && <NavLink to="/form" activeClassName="active">Form</NavLink>}
                     {isAdmin && <NavLink to="/search" activeClassName="active">Search</NavLink>}
-                    {isAdmin && <NavLink to="/schedule" activeClassName="active">Schedule</NavLink>}
-                    {isAdmin && <NavLink to="/schedule-w" activeClassName="active">ScheduleW</NavLink>}
+                    {isAdmin && <NavLink to="/schedule" activeClassName="active">PRP</NavLink>}
+                    {isAdmin && <NavLink to="/schedule-w" activeClassName="active">Waived</NavLink>}
                     <button className="logout-button" onClick={handleLogoutClick}>
                         Logout
                     </button>

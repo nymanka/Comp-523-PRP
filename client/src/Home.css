@@ -22,6 +22,8 @@
 .notifications-container {
   margin-right: 20px; /* Adjust space between notifications and calendar */
 }
+/* CSS for the Reset Button */
+
 
 .calendar-container {
   justify-content: center;
@@ -34,3 +36,4 @@
   max-height: 600px; /* Adjust height as necessary */
   border: none; /* Ensure no border around the iframe */
 }
+

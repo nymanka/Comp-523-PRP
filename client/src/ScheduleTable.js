@@ -20,7 +20,7 @@ function ScheduleTable({ users }) {
                         <td>{[user.schedulingData.date," ", user.schedulingData.time]}</td>
                         <td>{user.formData.name}</td>
                         <td>{user.formData.titleOfPRPTopic}</td>
-                        <td>{user.schedulingData.advisor}</td>
+                        <td>{user.formData.researchAdvisor}</td>
                         <td>
                             {
                                 // If committee is an array, join the elements. Otherwise, just display it.

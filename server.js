@@ -1,11 +1,12 @@
 
 const express = require('express');
+const fs = require('fs-extra');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const User = require('./User');
 const app = express();
 // Import Announcements model and functions
-const { createAnnouncement, getAllAnnouncements } = require('./Announcements');
+const { Announcement, createAnnouncement, getAllAnnouncements } = require('./Announcements');
 
 const saltRounds = 10;
 
@@ -277,6 +278,37 @@ app.get('/announcements', async (req, res) => {
   } catch (error) {
     console.error('Error fetching announcements:', error);
     res.status(500).send('Server error');
+  }
+});
+
+
+// Middleware to check if the user is authenticated and an admin
+function isAdmin(req, res, next) {
+  console.log('User data:', req.user);
+  // Assuming `req.user` holds the current user's info, typically set by some authentication middleware
+  if (req.user && req.user.waive === "admin") {
+    next();
+  } else {
+    res.status(403).send('Unauthorized');
+  }
+}
+
+app.post('/admin/reset', async (req, res) => {
+  try {
+    // Logic to delete files in '/uploads/'
+    const uploadsDir = path.join(__dirname, 'uploads');
+    await fs.emptyDir(uploadsDir); // fs-extra method to empty a directory without deleting it
+
+    // Logic to delete non-admin users
+    await User.deleteMany({ waive: { $ne: 'admin' } });
+
+    // Logic to delete all announcements
+    await Announcement.deleteMany({});
+
+    res.send('Reset completed successfully');
+  } catch (error) {
+    console.error('Error during reset:', error);
+    res.status(500).send('Server error during reset');
   }
 });
 

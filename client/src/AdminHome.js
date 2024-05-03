@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AdminHome.css'; // Ensure your CSS file is imported
+import './AdminHome.css';
+import { useAuth } from './AuthContext';
 
 const AdminHome = () => {
   const [announcementText, setAnnouncementText] = useState('');
+  const { isAdmin } = useAuth();
 
   const handleAnnouncementSubmit = async () => {
     try {
       await axios.post('http://localhost:5000/announcement', { message: announcementText });
-      // Optionally, you can clear the input field after successful submission
       setAnnouncementText('');
-      // You can also fetch the updated list of announcements and display them here
     } catch (error) {
       console.error('Error making announcement:', error);
-      // Handle error
     }
   };
 
@@ -21,11 +20,23 @@ const AdminHome = () => {
     setAnnouncementText(event.target.value);
   };
 
+  const handleReset = async () => {
+    if (window.confirm('Are you sure you want to reset the semester? This action cannot be undone.')) {
+      try {
+        await axios.post('http://localhost:5000/admin/reset');
+        alert('Reset successful');
+      } catch (error) {
+        console.error('Error during reset:', error);
+        alert('Reset failed');
+      }
+    }
+  };
+
   return (
     <div className="home-container">
+      <div className="top-section"> 
       <div className="notifications-container">
         <h2>Announcements</h2>
-        {<div className="announcement-input-container">
         <textarea
           value={announcementText}
           onChange={handleAnnouncementChange}
@@ -33,10 +44,9 @@ const AdminHome = () => {
           className="announcement-input"
         />
         <button onClick={handleAnnouncementSubmit} className="announcement-submit-button">Make Announcement</button>
-      </div>}
-        {/* You can fetch and display the announcements here */}
       </div>
       
+
       <div className="calendar-container">
         <iframe 
           src="https://calendar.google.com/calendar/embed?src=shadowkaan08%40gmail.com&ctz=America%2FNew_York" 
@@ -48,6 +58,17 @@ const AdminHome = () => {
           title="Google Calendar">
         </iframe>
       </div>
+      </div>
+
+      {/* Reset Section */}
+      {isAdmin && (
+        <div className="reset-section">
+          <h2>Reset Semester</h2>
+          <button className="reset-button" onClick={handleReset}>
+            Reset
+          </button>
+        </div>
+      )}
     </div>
   );
 };
