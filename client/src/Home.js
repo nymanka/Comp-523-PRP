@@ -28,12 +28,6 @@ const Home = () => {
             <li key={announcement._id}>{announcement.message}</li>
           ))}
         </ul>
-        <h2>Checklist</h2>
-        <ul>{
-            <><li>Your paper has been received.</li>
-            <li>Your talk has not been scheduled.</li></>
-        }
-        </ul>
       </div>
       <div className="calendar-container">
         <iframe 

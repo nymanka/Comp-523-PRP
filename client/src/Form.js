@@ -187,7 +187,7 @@ const handleClearForm = () => {
 )}
             <button type="submit" onClick={handleFormSubmit}>Save</button>
             <button type="button" onClick={handleEdit} disabled={!isReadOnly}>Edit</button>
-            <button type="button" onClick={handleClearForm}>Clear Form (for testing)</button>
+            <button type="button" onClick={handleClearForm}>Clear Form</button>
       </form>
     </div>
   );
