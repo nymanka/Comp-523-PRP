@@ -1,7 +1,14 @@
-// tests/register.test.js
 const request = require('supertest');
-const app = require('../app'); // Path to your Express application
+const mongoose = require('mongoose');
+const { app, server } = require('../server');
 
+afterAll(async () => {
+    await new Promise(resolve => server.close(resolve)); // Ensure server is closed
+    await mongoose.connection.close(); // Close mongoose connection
+});
+
+
+// tests/register.test.js
 describe('POST /register', () => {
   it('should register a new user and return 201 status', async () => {
     const newUser = {
@@ -16,7 +23,8 @@ describe('POST /register', () => {
       .send(newUser)
       .expect(201);
 
-    expect(response.body).toHaveProperty('message', 'User registered successfully');
+    expect(response.status).toBe(201);
+    expect(response.text).toBe('User registered successfully'); // Checking the response text directly
   });
 });
 
@@ -35,8 +43,8 @@ describe('POST /signin', () => {
   
     it('should sign in successfully with correct credentials', async () => {
       const userCredentials = {
-        username: 'existingUser',
-        password: 'correctPassword'
+        username: 'testUser',
+        password: 'password123'
       };
       const response = await request(app)
         .post('/signin')
@@ -44,7 +52,7 @@ describe('POST /signin', () => {
         .expect(200);
   
       expect(response.body).toHaveProperty('email');
-      expect(response.body).toHaveProperty('username', 'existingUser');
+      expect(response.body).toHaveProperty('username', 'testUser');
     });
   });
 

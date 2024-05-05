@@ -5,12 +5,13 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const User = require('./User');
 const app = express();
+
 // Import Announcements model and functions
 const { Announcement, createAnnouncement, getAllAnnouncements } = require('./Announcements');
 
 const saltRounds = 10;
 
-const PORT = process.env.PORT || 5000;
+
 
 const cors = require('cors');
 app.use(cors());
@@ -346,7 +347,16 @@ app.post('/admin/reset', async (req, res) => {
   }
 });
 
+let server;
+if (require.main === module) {
+    // The file is being executed directly, not required as a module
+    const PORT = process.env.PORT || 5000;
+    server = app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+} else {
+    // The file is being required as a module from elsewhere, likely a test
+    server = app.listen(); // Listen without specifying a port for testing
+}
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+module.exports = { app, server }; // Export both app and server
