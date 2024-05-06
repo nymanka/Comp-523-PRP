@@ -13,6 +13,6 @@
 - Run the same command from the Client directory.
 
 ### How to run program:
--Navigate to the root directory and run the command “npm start” to start the server.
--After you are done with that open another terminal window and navigate to the client directory of the project and run the command “npm start”.
--Now you should be all set!
+- Navigate to the root directory and run the command “npm start” to start the server.
+- After you are done with that open another terminal window and navigate to the client directory of the project and run the command “npm start”.
+- Now you should be all set!
