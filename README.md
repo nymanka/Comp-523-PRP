@@ -12,7 +12,7 @@ _Dependancies:_
 - On the server machine, open a terminal, navigate to the root of the cloned directory (Comp-523-PRP), and run the command “npm install” to download the required node modules.
 - Run the same command from the Client directory.
 
-_To run it:_
+_To-run-it:_
 -Navigate to the root directory and run the command “npm start” to start the server.
 -After you are done with that open another terminal window and navigate to the client directory of the project and run the command “npm start”.
 -Now you should be all set!
